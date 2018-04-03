@@ -181,7 +181,7 @@ $(OUTDIR)/libcryptoauth.a: $(LIBCRYPTOAUTH_OBJECTS) | $(OUTDIR)
 
 $(OUTDIR)/libateccssl.so: $(LIBATECCSSL_OBJECTS) $(LIBCRYPTOAUTH_OBJECTS) | $(OUTDIR)
 	@echo " [LD] $@"
-	@$(CC) -shared $(LIBATECCSSL_OBJECTS) $(LIBCRYPTOAUTH_OBJECTS) -o $@ -lcrypto -lrt
+	@$(CC) -shared $(LIBATECCSSL_OBJECTS) $(LIBCRYPTOAUTH_OBJECTS) -o $@ -l:libcrypto.so.1.0.0 -lrt
 
 $(OUTDIR)/test: $(OUTDIR)/libateccssl.so $(TEST_OBJECTS) | $(OUTDIR)
 	@echo " [CC TEST] $@"

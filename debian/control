@@ -5,8 +5,8 @@ Priority: optional
 Standards-Version: 3.9.2
 Build-Depends: debhelper (>= 9), libssl-dev | libssl1.0-dev (>= 1.0.2), libssl-dev | libssl1.0-dev (<< 1.1.0)
 
-Package: libateccssl
+Package: libateccssl1.0
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, libssl1.0.0 | libssl1.0.2 (>= 1.0.2)
 Multi-Arch: same
-Description: ATECC508A/608A engine for OpenSSL
+Description: ATECC508A/608A engine for OpenSSL 1.0.2
