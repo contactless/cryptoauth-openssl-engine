@@ -67,7 +67,7 @@ ATCA_STATUS eccx08_global_lock(void)
     ATCA_STATUS status = ATCA_SUCCESS;
     if (!global_lock.handle)
     {
-        if (ATCA_SUCCESS != (status = hal_os_create_mutex(&global_lock.handle, engine_eccx08_mutex_name)))
+        if (ATCA_SUCCESS != (status = hal_create_mutex(&global_lock.handle, engine_eccx08_mutex_name)))
         {
             return status;
         }
@@ -77,7 +77,7 @@ ATCA_STATUS eccx08_global_lock(void)
     if (!global_lock.state)
     {
             DEBUG_ENGINE("About to lock mutex in global_lock\n");
-        status = hal_os_lock_mutex(global_lock.handle);
+        status = hal_lock_mutex(global_lock.handle);
         if (ATCA_FUNC_FAIL == status)
         {
             /* Mutex was obtained but we're in an unknown state */
@@ -97,7 +97,7 @@ ATCA_STATUS eccx08_global_lock(void)
 /** \brief Unlock the global mutex */
 ATCA_STATUS eccx08_global_unlock(void)
 {
-    ATCA_STATUS status = hal_os_unlock_mutex(global_lock.handle);
+    ATCA_STATUS status = hal_unlock_mutex(global_lock.handle);
 
     if (ATCA_SUCCESS == status)
     {
@@ -224,7 +224,7 @@ static int eccx08_destroy(ENGINE *e)
 {
     DEBUG_ENGINE("Entered\n");
 
-    if (hal_os_destroy_mutex(global_lock.handle))
+    if (hal_destroy_mutex(global_lock.handle))
     {
         return ENGINE_OPENSSL_FAILURE;
     }
@@ -249,7 +249,7 @@ static int eccx08_init(ENGINE *e)
 
     if (!global_lock.handle)
     {
-        if (hal_os_create_mutex(&global_lock.handle, engine_eccx08_mutex_name))
+        if (hal_create_mutex(&global_lock.handle, engine_eccx08_mutex_name))
         {
             return ENGINE_OPENSSL_FAILURE;
         }
